@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>index</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            height: 100vh;
+        }
+        /* Global reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Styling for the top navbar */
+.top-nav {
+    position: fixed;
+    top: 15px;
+    width: 29%;
+    background: rgba(0, 0, 0, 0.3); /* Semi-transparent black background */
+    backdrop-filter: blur(12px); /* More intense blurry effect */
+    -webkit-backdrop-filter: blur(9px); /* Support for Safari */
+    border-bottom: 2px solid rgba(255, 255, 255, 0.252); /* Subtle border for separation */
+    padding: 15px 30px;
+    display: flex;
+    justify-content: flex-end;
+    gap: 20px; /* Space between buttons */
+    z-index: 1000;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3); /* Soft shadow for depth */
+}
+
+/* Styling for the Kuramya and Gushimisha buttons */
+.kuramya-btn, .gushimisha-btn {
+    width: 60%;
+    padding: 10px 20px;
+    font-size: 18px;
+    font-weight: bold;
+    background-color: #fff;
+    color: #333;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease; /* Smooth transition for hover effects */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); /* Soft shadow for buttons */
+}
+
+/* Button hover effect */
+.kuramya-btn:hover, .gushimisha-btn:hover {
+    background-color: #f0f0f0; /* Slightly darker background */
+    color: #007bff; /* Change text color */
+    transform: translateY(-2px); /* Slight lift effect */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3); /* Darker shadow on hover */
+    border: 2px solid #007bff; /* Blue border on hover */
+}
+
+/* Button active effect */
+.kuramya-btn:active, .gushimisha-btn:active {
+    transform: translateY(2px); /* Slight press effect */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Reduced shadow on active state */
+}
+        .content {
+            display: flex;
+            flex-grow: 1;
+        }
+        .left-side {
+            width: 30%;
+            padding: 20px;
+            background-color: rgba(0, 0, 0, 0.223);
+            border-radius: 10px;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+            margin-top: 70px;
+            color: white;
+        }
+        .right-side {
+            flex-grow: 1;
+            text-align: center;
+            padding: 20px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+            margin-left: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        .search-container {
+            margin-bottom: 10px;
+            text-align: center;
+        }
+        .search-input {
+            padding: 10px;
+            font-size: 16px;
+            width: 80%;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+        }
+        .song-list {
+            list-style-type: none;
+            padding: 0;
+        }
+        .song-list li {
+            background-color: #6d6c6c;
+            color: rgb(255, 255, 255);
+            padding: 10px;
+            margin: 5px 0;
+            cursor: pointer;
+            text-align: center;
+            border-radius: 8px;
+            transition: background 0.3s ease;
+        }
+        .song-list li:hover {
+            background-color: #0a79b9;
+        }
+        .lyrics-container {
+            flex-grow: 1;
+            overflow-y: auto;
+        }
+.audio-player {
+            position: fixed;
+            bottom: 3%;
+            left: 48%;
+            width: 35%;
+            background: rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+            border-top: 2px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0px -4px 6px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+            border-radius: 20px;
+        }
+        .audio-controls button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .audio-controls button:hover {
+            background-color: #0056b3;
+        }
+        .progress-bar {
+            flex-grow: 1;
+            margin: 0 10px;
+        }
+        .volume-control {
+            width: 80px;
+        }
+    </style>
+</head>
+<body>
+    <div class="content">
+        <div class="top-nav">
+            <button class="kuramya-btn">Kuramya</button>
+            <button class="gushimisha-btn">Gushimisha</button>
+        </div>
+
+        <!-- Left Side (Song List) -->
+        <div class="left-side" id="left-content">
+            <div class="search-container">
+                <input type="text" class="search-input" placeholder="Search...">
+            </div>
+            <h3>Song List</h3>
+            <ul class="song-list" id="song-list">
+                <li onclick="playSong('Song 1', 'audio1.mp3')">1. Urukundo ruhebuje</li>
+                <li onclick="playSong('Song 2', 'how_great_thou_art.mp3')">2. Nari naramenyerey' ibyaha</li>
+                <li onclick="playSong('Song 3', 'hallelujah.mp3')">Song 3 - Hallelujah</li>
+                <li onclick="playSong('Song 4', 'what_a_friend.mp3')">Song 4 - What a Friend We Have in Jesus</li>
+                <li onclick="playSong('Song 5', 'great_is_thy_faithfulness.mp3')">Song 5 - Great is Thy Faithfulness</li>
+            </ul>
+        </div>
+
+        <!-- Right Side (Lyrics & Audio Player) -->
+        <div class="right-side">
+            <div class="lyrics-container" id="lyrics-content">
+                <h2>Lyrics</h2>
+                <p>Select a song to view lyrics</p>
+            </div>
+
+            <!-- Bottom Audio Player -->
+            <div class="audio-player">
+                <button id="playPauseBtn" onclick="togglePlayPause()">▶️</button>
+                <input type="range" id="progressBar" class="progress-bar" min="0" max="100" value="0" step="1" onchange="seekAudio()">
+                <span id="currentTime">0:00</span> / <span id="duration">0:00</span>
+                <input type="range" id="volumeControl" class="volume-control" min="0" max="1" step="0.1" value="1" onchange="changeVolume()">
+            </div>
+        </div>
+    </div>
+
+    <audio id="audioPlayer" ontimeupdate="updateTime()" onended="resetPlayer()"></audio>
+
+    <script>
+        let audioPlayer = document.getElementById("audioPlayer");
+        let playPauseBtn = document.getElementById("playPauseBtn");
+        let progressBar = document.getElementById("progressBar");
+
+        const lyricsData = {
+            "Song 1": `<h2>1. Urukundo ruhebuje</h2><h3>Urukundo ruhebuje</h3><p><sup>1</sup> Urukundo ruhebuje,<br> gend' urwogeze hose.<br> Urukundo ruhebuje,<br> n'indirimbo ya mbere.<br>Yaririmbwe na marayika,<br> yumvikana mu bashumba.<br> Twishimiye kumenya<br> ko haj' urukundo rw'Imana.</p><p><sup>Inyikirizo </sup><em> Urukundo!<br> Urukundo!<br> Urukundo!<br> Ngurw' urukundo rw'Imana.</em></p><p><sup>2</sup> Urukundo ruhebuje,<br> rushak'uwazimiye.<br> Urukundo ruhebuje<br> rurakubabarira.<br> Jyakuri ya soko nziza,<br> ituruk' i Gologota.<br> Uzaboner' ubugingo<br> mu rukundo ruhebuje.</p> <p><sup>4</sup> Urukundo ruhebuje,<br> rutugeza mw ijuru.<br> Urukundo ruhebuje,<br> tuzanezerwa cyane.<br> Mw ijuru nta ndwar' ibayo,<br> nta rupfu ruzagerayo.<br> Twakijijwe n'urukundo rwinshi<br> rw' Iman' ihoraho.</p>`,
+            "Song 2": `<h2>2. Nari naramenyerey' ibyaha</h2><p>O Lord my God, when I in awesome wonder,<br>Consider all the worlds Thy hands have made;<br>I see the stars, I hear the rolling thunder,<br>Thy power throughout the universe displayed.</p>`,
+            "Song 3": `<h2>3. Nari narazimiriye kure</h2><p>Hallelujah, Hallelujah, Hallelujah!<br>Your love makes me sing,<br>Hallelujah, Hallelujah, Hallelujah!<br>Your love is amazing.</p>`,
+            "Song 4": `<h2>4. Niboneye urukundo rw'umukiza</h2><p>What a friend we have in Jesus,<br>All our sins and griefs to bear!<br>What a privilege to carry<br>Everything to God in prayer.</p>`,
+            "Song 5": `<h2>5. Sinzibagirwa igihe nakizwaga</h2><p>Great is Thy faithfulness, O God my Father,<br>There is no shadow of turning with Thee;<br>Thou changest not, Thy compassions they fail not,<br>As Thou hast been, Thou forever wilt be.</p>`
+        };
+
+        function playSong(songTitle, audioFile) {
+            document.getElementById("lyrics-content").innerHTML = lyricsData[songTitle] || "<p>Lyrics not available.</p>";
+            audioPlayer.src = `audio/${audioFile}`;
+            audioPlayer.play();
+            playPauseBtn.textContent = "⏸️";
+        }
+
+        function togglePlayPause() {
+            if (audioPlayer.paused) {
+                audioPlayer.play();
+                playPauseBtn.textContent = "⏸️";
+            } else {
+                audioPlayer.pause();
+                playPauseBtn.textContent = "▶️";
+            }
+        }
+
+        function updateTime() {
+            progressBar.value = (audioPlayer.currentTime / audioPlayer.duration) * 100;
+            document.getElementById("currentTime").textContent = formatTime(audioPlayer.currentTime);
+            document.getElementById("duration").textContent = formatTime(audioPlayer.duration);
+        }
+
+        function seekAudio() {
+            audioPlayer.currentTime = (progressBar.value / 100) * audioPlayer.duration;
+        }
+
+        function changeVolume() {
+            audioPlayer.volume = document.getElementById("volumeControl").value;
+        }
+
+        function formatTime(seconds) {
+            return `${Math.floor(seconds / 60)}:${String(Math.floor(seconds % 60)).padStart(2, "0")}`;
+        }
+    </script>
+</body>
+</html>
